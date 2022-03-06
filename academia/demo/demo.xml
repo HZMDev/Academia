@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="curso1" model="academia.curso">
+      <field name="name">DAW2</field>
+      <field name="plazas">25</field>
+      <field name="precio_hora">5.5</field>
+    </record> 
+
+    <record id="curso2" model="academia.curso">
+      <field name="name">DAW2</field>
+      <field name="plazas">30</field>
+    </record>
+
+    <record id="curso3" model="academia.curso">
+      <field name="name">ASIR2</field>
+      <field name="plazas">25</field>
+      <field name="precio_hora">4.8</field>
+    </record> 
+
+    <record id="profesor1" model="academia.profesor">
+      <field name="name">67666345P</field>
+      <field name="nombre">Manuel</field>
+      <field name="apellidos">Sanchez</field>
+      <field name="telefono_contacto">725654534</field>
+    </record>
+
+    <record id="profesor2" model="academia.profesor">
+      <field name="name">77626225L</field>
+      <field name="nombre">Marcos</field>
+      <field name="apellidos">Gonzalez</field>
+      <field name="telefono_contacto">976783224</field>
+    </record>
+
+    <record id="profesor3" model="academia.profesor">
+      <field name="name">13646345K</field>
+      <field name="nombre">Jairo</field>
+      <field name="apellidos">Diaz</field>
+      <field name="telefono_contacto">916765367</field>
+    </record>
+s
+    <record id="asignatura1" model="academia.asignatura">
+      <field name="name">Acceso a Datos</field>
+      <field name="descripcion">Acceso a datos mediante Java</field>
+      <field name="horas">115</field>
+      <field name="curso_id" ref="curso2"/>
+      <field name="profesor_id" ref="profesor2"/>
+    </record>
+
+    <record id="asignatura2" model="academia.asignatura">
+      <field name="name">Desarrollo de Interfaces</field>
+      <field name="descripcion">Desarrollo de Interfaces con C Sharp y .NET Framework</field>
+      <field name="horas">120</field>
+      <field name="curso_id" ref="curso2"/>
+      <field name="profesor_id" ref="profesor1"/>
+    </record>
+
+    <record id="asignatura3" model="academia.asignatura">
+      <field name="name">Programacion de Dispositivos Multimedia</field>
+      <field name="descripcion">Aplicaciones de Android mediante el lenguaje Java</field>
+      <field name="horas">80</field>
+      <field name="curso_id" ref="curso1"/>
+      <field name="profesor_id" ref="profesor3"/>
+    </record>
+
+    <record id="asignatura4" model="academia.asignatura">
+      <field name="name">Redes Locales</field>
+      <field name="descripcion">Control y creacion de redes</field>
+      <field name="horas">135</field>
+      <field name="curso_id" ref="curso3"/>
+      <field name="profesor_id" ref="profesor3"/>
+    </record>
+
+    <record id="asignatura5" model="academia.asignatura">
+      <field name="name">Servicios web</field>
+      <field name="descripcion">Servicios web mediante JavaScript</field>
+      <field name="horas">65</field>
+      <field name="curso_id" ref="curso2"/>
+      <field name="profesor_id" ref="profesor2"/>
+    </record>
+    
+    <record id="evaluacion1" model="academia.evaluacion">
+      <field name="fecha" eval="datetime.now()"/>
+      <field name="profesor_id" ref="profesor1"/>
+      <field name="tipo">e</field>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura1'), ref('asignatura2')])]"/>
+    </record>
+
+    <record id="evaluacion2" model="academia.evaluacion">
+      <field name="fecha" eval="datetime.now()"/>
+      <field name="profesor_id" ref="profesor2"/>
+      <field name="tipo">f</field>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura3')])]"/>
+    </record>
+
+    <record id="evaluacion3" model="academia.evaluacion">
+      <field name="fecha" eval="datetime.now()"/>
+      <field name="profesor_id" ref="profesor2"/>
+      <field name="tipo">o</field>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura5'), ref('asignatura4')])]"/>
+    </record>
+
+    <record id="evaluacion4" model="academia.evaluacion">
+      <field name="fecha" eval="datetime.now()"/>
+      <field name="profesor_id" ref="profesor3"/>
+      <field name="tipo">o</field>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura4')])]"/>
+    </record>
+
+    <record id="alumno1" model="academia.alumno">
+      <field name="name">77226115V</field>
+      <field name="nombre">Francisco</field>
+      <field name="apellidos">Perez</field>
+      <field name="telefono_contacto">345675678</field>
+      <field name="fecha_nacimiento">2000-12-24</field>
+      <field name="curso_id" ref="curso3"/>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura1'), ref('asignatura2'), ref('asignatura4')])]"/>
+    </record>
+
+    <record id="alumno2" model="academia.alumno">
+      <field name="name">71144451P</field>
+      <field name="nombre">Manuel</field>
+      <field name="apellidos">Gomez</field>
+      <field name="telefono_contacto">654354267</field>
+      <field name="fecha_nacimiento">1990-10-12</field>
+      <field name="curso_id" ref="curso2"/>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura2')])]"/>
+    </record>
+
+    <record id="alumno3" model="academia.alumno">
+      <field name="name">72222667L</field>
+      <field name="nombre">Juan</field>
+      <field name="apellidos">Martinez</field>
+      <field name="telefono_contacto">675876456</field>
+      <field name="fecha_nacimiento">2002-03-14</field>
+      <field name="curso_id" ref="curso1"/>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura2'), ref('asignatura1')])]"/>
+    </record>
+    
+    <record id="alumno4" model="academia.alumno">
+      <field name="name">87666554K</field>
+      <field name="nombre">Alberto</field>
+      <field name="apellidos">Garcia</field>
+      <field name="telefono_contacto">677655565</field>
+      <field name="fecha_nacimiento">2001-08-19</field>
+      <field name="curso_id" ref="curso2"/>
+      <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura2'), ref('asignatura1')])]"/>
+    </record>
+    
+  </data>
+</odoo>

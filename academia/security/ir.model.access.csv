@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_academia_asignatura_jefe_estudios,academia.asignatura.jefe_estudios,model_academia_asignatura,academia.group_academia_jefe_estudios,1,1,0,0
+access_academia_curso_jefe_estudios,academia.curso.jefe_estudios,model_academia_curso,academia.group_academia_jefe_estudios,1,0,0,0
+access_academia_evaluacion_jefe_estudios,academia.evaluacion.jefe_estudios,model_academia_evaluacion,academia.group_academia_jefe_estudios,1,1,1,1
+access_academia_asignatura_director,academia.asignatura.director,model_academia_asignatura,academia.group_academia_director,0,0,1,1
+access_academia_curso_director,academia.curso.director,model_academia_curso,academia.group_academia_director,0,1,1,1
+access_academia_profesor_jefe_estudios,academia.profesor.jefe_estudios,model_academia_profesor,academia.group_academia_jefe_estudios,1,1,1,1
+access_academia_profesor_director,academia.profesor.director,model_academia_profesor,academia.group_academia_director,1,1,1,0
+access_academia_alumno_jefe_estudios,academia.alumno.jefe_estudios,model_academia_alumno,academia.group_academia_jefe_estudios,1,1,1,1
+access_academia_alumno_director,academia.alumno.director,model_academia_alumno,academia.group_academia_director,1,1,1,0

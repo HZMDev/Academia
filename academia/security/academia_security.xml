@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">>
+        <!-- CATEGORIA-->
+        <record model="ir.module.category" id="academia.module_category_academia">
+            <field name="name">Academia</field>
+            <field name="description">Ayuda a gestionar tu academia</field>
+            <field name="sequence">108</field>
+        </record>
+
+        <!-- GRUPOS-->
+        <record model="res.groups" id="group_academia_jefe_estudios" >
+            <field name="name">Jefe de Estudios</field>
+            <field name="category_id" ref="academia.module_category_academia"/>
+            <field name="comment">Usuario que gestiona evaluaciones y asignaturas</field>  
+        </record>
+        
+        <record model="res.groups" id="group_academia_director">
+            <field name="name">Director</field>
+            <field name="category_id" ref="academia.module_category_academia"/>
+            <field name="comment">Usuario que gestiona todo</field>
+            <!-- Todos los directores tienen permisos de jefes de estudios ademas de los propios-->
+            <field name="implied_ids" eval="[(4, ref('group_academia_jefe_estudios'))]"/>
+            <!-- Los administradores pertenecen automaticamente a este grupo-->
+            <field name="users" eval="[(4, ref('base.user_root')), (4,ref( 'base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

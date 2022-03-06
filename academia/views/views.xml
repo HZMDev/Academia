@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de arbol Asignatura-->
+        <record model="ir.ui.view" id="academia.asignatura_list_view">
+            <field name="name">academia.asignatura.view.tree</field>
+            <field name="model">academia.asignatura</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="descripcion"/>
+                    <field name="horas"/>
+                    <field name="precio"/>
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                    <field name="evaluacion_ids"/>
+                    <field name="alumno_ids"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Vista de formulario Asignatura -->
+        <record model="ir.ui.view" id="academia.asignatura_form_view">
+            <field name="name">academia.asignatura.view.form</field>
+            <field name="model">academia.asignatura</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Informacion de la Asignatura"></separator>
+                        <h1>
+                            <field name="name" placeholder="Nombre"/>
+                        </h1>   
+                        <group>
+                            <group>                                      
+                                <field name="descripcion"/>         
+                                <field name="curso_id" />
+                                <field name="profesor_id"/>
+                            </group>   
+                            <group>                                      
+                                <field name="horas"/>
+                                <field name="precio"/>
+                            </group>                                              
+                        </group>
+                        <group>
+                            <field name="evaluacion_ids"/> 
+                        </group>
+                        <group>
+                            <field name="alumno_ids"/> 
+                        </group>
+                    </sheet>   
+                </form>
+            </field>
+        </record>
+        <!-- Vista de busqueda Asignatura-->
+        <record model="ir.ui.view" id="academia.asignatura_search_view">
+            <field name="name">academia.asignatura.view.search</field>
+            <field name="model">academia.asignatura</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="descripcion"/>
+                    <field name="horas"/>
+                    <field name="precio"/>
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                    <field name="evaluacion_ids"/>
+                    <field name="alumno_ids"/>
+                    <!-- Filtros -->
+                    <group>
+                        <filter name="carga_alta" string="Carga Alta" domain="[('horas', '&gt;', '130')]"/>
+                        <filter name="carga_media" string="Carga Media" domain="[('horas', '&gt;', '69'), ('horas','&lt;','131')]"/>
+                        <filter name="carga_baja" string="Carga Baja" domain="[('horas', '&lt;', '70')]"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- Accion de ventana Asignatura-->
+         <record model="ir.actions.act_window" id="academia.asignatura_action_window">
+            <field name="name">Asignaturas</field>
+            <field name="res_model">academia.asignatura</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <!-- Vista de arbol Evaluacion-->
+        <record model="ir.ui.view" id="academia.evaluacion_list_view">
+            <field name="name">academia.evaluacion.view.tree</field>
+            <field name="model">academia.evaluacion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="fecha"/>
+                    <field name="profesor_id"/>
+                    <field name="tipo"/>
+                    <field name="asignatura_ids"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Vista de formulario Evaluacion-->
+        <record model="ir.ui.view" id="academia.evaluacion_form_view">
+            <field name="name">academia.evaluacion.view.form</field>
+            <field name="model">academia.evaluacion</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Informacion de la evaluacion"></separator>
+                        <group>
+                            <group>
+                                <field name="fecha"/>
+                                <field name="profesor_id"/>
+                            </group>
+                            <group>
+                                <field name="tipo"/>
+                            </group>                             
+                        </group>
+                        <group>
+                            <field name="asignatura_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Vista de busqueda Evaluacion-->
+        <record model="ir.ui.view" id="academia.evaluacion_search_view">
+            <field name="name">academia.evaluacion.view.search</field>
+            <field name="model">academia.evaluacion</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="fecha"/>
+                    <field name="profesor_id"/>
+                    <field name="tipo"/>
+                    <field name="asignatura_ids"/>
+                    
+                     <!-- Filtros -->
+                    <group>
+                        <filter name="group_by_tipo" string="Tipo" context="{'group_by':'tipo'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- Vista de calendario Evaluacion -->
+        <record model="ir.ui.view" id="academia.evaluacion_calendar_view">
+            <field name="name">academia.evaluacion.view.calendar</field>
+            <field name="model">academia.evaluacion</field>
+            <field name="arch" type="xml">
+                <calendar mode="month" date_start="fecha" color="tipo">
+                    <field name="tipo"/>
+                    <field name="profesor_id"/>
+                </calendar>
+            </field>
+        </record>
+        <!-- Accion de ventana Evaluacion-->
+        <record model="ir.actions.act_window" id="academia.evaluacion_action_window">
+            <field name="name">Evaluaciones</field>
+            <field name="res_model">academia.evaluacion</field>
+            <field name="view_mode">tree,form,search,calendar</field>
+        </record>
+
+        <!-- Vista de arbol Curso-->
+        <record model="ir.ui.view" id="academia.curso_list_view">
+            <field name="name">academia.curso.view.tree</field>
+            <field name="model">academia.curso</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="plazas"/>
+                    <field name="precio_hora"/>
+                    <field name="alumno_ids"/>
+                    <field name="asignatura_ids"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Vista de formulario Curso-->
+        <record model="ir.ui.view" id="academia.curso_form_view">
+            <field name="name">academia.curso.view.form</field>
+            <field name="model">academia.curso</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Informacion del Curso"></separator>
+                        <h1>
+                            <field name="name" placeholder="Nombre"/>
+                        </h1> 
+                        <group>
+                            <group>                              
+                                <field name="plazas"/>
+                            </group>
+                            <group>
+                                <field name="precio_hora"/>
+                            </group>
+                        </group>        
+                        <separator string="Asignaturas"></separator>
+                        <field name="asignatura_ids" placeholder="Asignaturas"/>
+                        <separator string="Alumnos"></separator>
+                        <field name="alumno_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Accion de ventana Curso-->
+        <record model="ir.actions.act_window" id="academia.curso_action_window">
+            <field name="name">Cursos</field>
+            <field name="res_model">academia.curso</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Vista de arbol Profesor-->
+        <record model="ir.ui.view" id="academia.profesor_list_view">
+            <field name="name">academia.profesor.view.tree</field>
+            <field name="model">academia.profesor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="nombre"/>
+                    <field name="apellidos"/>
+                    <field name="telefono_contacto"/>
+                    <field name="asignatura_ids"/>
+                    <field name="evaluacion_ids"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Vista de formulario Profesor-->
+        <record model="ir.ui.view" id="academia.profesor_form_view">
+            <field name="name">academia.profesor.view.form</field>
+            <field name="model">academia.profesor</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Informacion del Profesor"></separator>
+                        <h1>
+                            <field name="name" placeholder="DNI"/>
+                        </h1> 
+                        <group>
+                            <group>
+                                <field name="nombre"/>
+                            </group>
+                            <group>
+                                <field name="apellidos"/>
+                                <field name="telefono_contacto"/>
+                            </group>
+                        </group>        
+                        <separator string="Asignaturas"></separator>
+                        <field name="asignatura_ids"/>
+
+                        <separator string="Evaluaciones"></separator>
+                        <field name="evaluacion_ids"/>  
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Accion de ventana Profesor-->
+        <record model="ir.actions.act_window" id="academia.profesor_action_window">
+            <field name="name">Profesores</field>
+            <field name="res_model">academia.profesor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Vista de arbol Alumno-->
+        <record model="ir.ui.view" id="academia.alumno_list_view">
+            <field name="name">academia.alumno.view.tree</field>
+            <field name="model">academia.alumno</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="nombre"/>
+                    <field name="apellidos"/>
+                    <field name="telefono_contacto"/>
+                    <field name="fecha_nacimiento"/>
+                    <field name="curso_id"/>
+                    <field name="asignatura_ids"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Vista de formulario Alumno-->
+        <record model="ir.ui.view" id="academia.alumno_form_view">
+            <field name="name">academia.alumno.view.form</field>
+            <field name="model">academia.alumno</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Informacion del Alumno"></separator>
+                        <h1>
+                            <field name="name" placeholder="DNI"/>
+                        </h1> 
+                        <group>
+                            <group>
+                                <field name="nombre"/>
+                                <field name="apellidos"/>
+                                <field name="fecha_nacimiento"/>
+                                
+                            </group>
+                            <group>
+                                <field name="curso_id"/>
+                                <field name="telefono_contacto"/>
+                            </group>
+                        </group>        
+                        <separator string="Asignaturas"></separator>
+                        <field name="asignatura_ids"/>            
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Accion de ventana Alumno-->
+        <record model="ir.actions.act_window" id="academia.alumno_action_window">
+            <field name="name">Alumnos</field>
+            <field name="res_model">academia.alumno</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu Raiz -->
+        <menuitem name="Academia" id="academia.menu_root"/>
+        <!-- SubMenus -->
+        <menuitem name="Cursos" id="academia.curso_menu" parent="academia.menu_root" action="academia.curso_action_window"/>
+
+        <menuitem name="Recursos" id="academia.recursos_menu" parent="academia.menu_root"/>
+        <menuitem name="Asignaturas" id="academia.asignatura_menu" parent="academia.recursos_menu" action="academia.asignatura_action_window"/>
+        <menuitem name="Profesores" id="academia.profesor_menu" parent="academia.recursos_menu" action="academia.profesor_action_window"/> 
+        <menuitem name="Alumnos" id="academia.alumno_menu" parent="academia.recursos_menu" action="academia.alumno_action_window"/> 
+
+        <menuitem name="Evaluaciones" id="academia.evaluacion_menu" parent="academia.menu_root" action="academia.evaluacion_action_window"/>
+    </data>
+</odoo>
