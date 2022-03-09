@@ -21,10 +21,18 @@ Evaluación
 evaluación.
 • tipo: selección, Tipo de evaluación. Los valores disponibles son: o – Ordinaria, f –
 Final, e – Extraordinaria. Valor por defecto “final”.
+
+Evaluación
+• fecha: fecha, obligatorio, Día en el que se realiza la evaluación.
+• responsable: cadena, obligatorio. Nombre de la persona encargada de realizar la
+evaluación.
+• tipo: selección, Tipo de evaluación. Los valores disponibles son: o – Ordinaria, f –
+Final, e – Extraordinaria. Valor por defecto “final”.
 """
 
 class curso(models.Model):
     _name='academia.curso'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description='Gestion de un curso'
 
     sequence = fields.Integer(string="Secuencia", default=10)
@@ -33,11 +41,37 @@ class curso(models.Model):
     precio_hora = fields.Float(string='Precio Hora', default=4.5)
 
     alumno_ids = fields.One2many('academia.alumno', 'curso_id', string="Alumnos")
-    #Relaciones
+
+    alumnos_totales = fields.Integer(string="Alumnos Totales", compute='_get_alumnos_totales')
+
+    horas_totales = fields.Integer(string="Horas Totales", compute='_get_horas_totales')
+
     asignatura_ids = fields.One2many('academia.asignatura', 'curso_id', string="Asignaturas")
 
+    @api.depends('alumno_ids')
+    def _get_alumnos_totales(self):
+        for curso in self:
+            curso.alumnos_totales = len(curso.alumno_ids)
+
+    @api.depends('asignatura_ids')
+    def _get_horas_totales(self):
+        for curso in self:
+          for asignatura in curso.asignatura_ids:
+              curso.horas_totales+=asignatura.horas
+
+    def get_alumnos(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Alumnos',
+            'view_mode': 'tree,form',
+            'res_model': 'academia.alumno',
+            'domain': [('curso_id', '=', self.id)],
+            'target' : 'current',
+        }
+    
 class profesor(models.Model):
     _name='academia.profesor'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description='Gestion de un profesor'
     _order="name"
 
@@ -55,6 +89,7 @@ class profesor(models.Model):
 
 class asignatura(models.Model):
     _name='academia.asignatura'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description='Gestion de una asignatura'
     
     sequence = fields.Integer(string="Secuencia", default=10)
@@ -77,13 +112,14 @@ class asignatura(models.Model):
 
 class evaluacion(models.Model):
     _name='academia.evaluacion'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description='Gestion de una evaluacion'
     _order='fecha'
 
     sequence = fields.Integer(string="Secuencia", default=10)
     fecha = fields.Date(string='Fecha', required=True, help='Dia en que se realiza evaluacion')
-    #responsable = fields.Char(string='Nombre del responsable', required=True)
     tipo = fields.Selection(string='Tipo', selection=[('o', 'Ordinaria'),('f', 'Final'),('e', 'Extraordinaria')], default='f')
+    comentarios = fields.Char(string='Comentarios', help="Comentarios de la evaluacion", translate=True)
 
     #Relaciones
     asignatura_ids = fields.Many2many('academia.asignatura', string="Asignaturas")
@@ -92,17 +128,23 @@ class evaluacion(models.Model):
 class alumno(models.Model):
     _name='academia.alumno'
     _description='Gestion de un alumno'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order="name, fecha_nacimiento"
 
     sequence = fields.Integer(string="Secuencia", default=10)
     name=fields.Char(string='DNI', required=True)
     nombre = fields.Char(string='Nombre', required=True)
-    apellidos = fields.Char(string='Apellidos', required=True)
-  
+    apellidos = fields.Char(string='Apellidos', required=True) 
     telefono_contacto = fields.Char(string='Telefono Contacto', required=True)
     fecha_nacimiento = fields.Date(string="Fecha de Nacimiento", required=True)
     
+    asignaturas_totales = fields.Integer(string="Asignaturas Totales", compute="_get_asignaturas_totales")
+
     #Relaciones
     asignatura_ids = fields.Many2many('academia.asignatura', string="Asignaturas")
     curso_id = fields.Many2one('academia.curso', string="Curso")
 
+    @api.depends('asignatura_ids')
+    def _get_asignaturas_totales(self):
+        for alumno in self:
+            alumno.asignaturas_totales = len(alumno.asignatura_ids)

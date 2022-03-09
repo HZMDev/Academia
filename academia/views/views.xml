@@ -14,8 +14,6 @@
                     <field name="precio"/>
                     <field name="curso_id"/>
                     <field name="profesor_id"/>
-                    <field name="evaluacion_ids"/>
-                    <field name="alumno_ids"/>
                 </tree>
             </field>
         </record>
@@ -41,13 +39,20 @@
                                 <field name="precio"/>
                             </group>                                              
                         </group>
-                        <group>
-                            <field name="evaluacion_ids"/> 
-                        </group>
-                        <group>
-                            <field name="alumno_ids"/> 
-                        </group>
-                    </sheet>   
+                        <notebook>
+                            <page string="Evaluaciones" name="asignatura_evaluacion_ids">
+                                <field name="evaluacion_ids"/>
+                            </page>
+                            <page string="Alumnos" name="asignatura_alumno_ids">
+                                <field name="alumno_ids"/>
+                            </page>
+                        </notebook> 
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>   
                 </form>
             </field>
         </record>
@@ -92,6 +97,7 @@
                     <field name="profesor_id"/>
                     <field name="tipo"/>
                     <field name="asignatura_ids"/>
+                    <field name="comentarios"/>
                 </tree>
             </field>
         </record>
@@ -115,7 +121,16 @@
                         <group>
                             <field name="asignatura_ids"/>
                         </group>
+                        <group>
+                            <field name="comentarios"/>
+                        </group>
                     </sheet>
+                    <!-- CHATTER -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -137,6 +152,7 @@
                 </search>
             </field>
         </record>
+        
         <!-- Vista de calendario Evaluacion -->
         <record model="ir.ui.view" id="academia.evaluacion_calendar_view">
             <field name="name">academia.evaluacion.view.calendar</field>
@@ -144,10 +160,12 @@
             <field name="arch" type="xml">
                 <calendar mode="month" date_start="fecha" color="tipo">
                     <field name="tipo"/>
-                    <field name="profesor_id"/>
+                    <field name="comentarios"/>
                 </calendar>
             </field>
         </record>
+
+
         <!-- Accion de ventana Evaluacion-->
         <record model="ir.actions.act_window" id="academia.evaluacion_action_window">
             <field name="name">Evaluaciones</field>
@@ -177,7 +195,18 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <separator string="Informacion del Curso"></separator>
+                        <div class="oe_button_box" name="button_box">
+                            
+                            <button class="oe_stat_button" type="object" name="get_alumnos"
+                                icon="fa-male">
+                                <field string="Alumnos" name="alumnos_totales" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-globe">
+                                <field string="Horas" name="horas_totales" widget="statinfo"/>
+                            </button>
+                        </div>
+                       
+                        <separator string="Informacion del Curso"/>
                         <h1>
                             <field name="name" placeholder="Nombre"/>
                         </h1> 
@@ -188,12 +217,22 @@
                             <group>
                                 <field name="precio_hora"/>
                             </group>
-                        </group>        
-                        <separator string="Asignaturas"></separator>
-                        <field name="asignatura_ids" placeholder="Asignaturas"/>
-                        <separator string="Alumnos"></separator>
-                        <field name="alumno_ids"/>
+                        </group>    
+                        <notebook>
+                            <page string="Asignaturas" name="curso_asignatura_ids">
+                                <field name="asignatura_ids"/>
+                            </page>
+                            <page string="Alumnos" name="curso_alumno_ids">
+                                <field name="alumno_ids"/>
+                            </page>
+                        </notebook> 
                     </sheet>
+                    <!-- CHATTER -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>   
                 </form>
             </field>
         </record>
@@ -241,12 +280,22 @@
                                 <field name="telefono_contacto"/>
                             </group>
                         </group>        
-                        <separator string="Asignaturas"></separator>
-                        <field name="asignatura_ids"/>
 
-                        <separator string="Evaluaciones"></separator>
-                        <field name="evaluacion_ids"/>  
+                        <notebook>
+                            <page string="Asignaturas" name="profesor_asignatura_ids">
+                                <field name="asignatura_ids"/>
+                            </page>
+                            <page string="Evaluaciones" name="profesor_evaluacion_ids">
+                                <field name="evaluacion_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
+                    <!-- CHATTER -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -282,6 +331,11 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-globe">
+                                <field string="Asignaturas" name="asignaturas_totales" widget="statinfo"/>
+                            </button>
+                        </div>
                         <separator string="Informacion del Alumno"></separator>
                         <h1>
                             <field name="name" placeholder="DNI"/>
@@ -301,6 +355,12 @@
                         <separator string="Asignaturas"></separator>
                         <field name="asignatura_ids"/>            
                     </sheet>
+                    <!-- CHATTER -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
