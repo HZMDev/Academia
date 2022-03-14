@@ -83,6 +83,7 @@ s
       <field name="fecha" eval="datetime.now()"/>
       <field name="profesor_id" ref="profesor1"/>
       <field name="tipo">e</field>
+      <field name="comentarios">Evaluacion completada correctamente</field>
       <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura1'), ref('asignatura2')])]"/>
     </record>
 
@@ -90,6 +91,7 @@ s
       <field name="fecha" eval="datetime.now()"/>
       <field name="profesor_id" ref="profesor2"/>
       <field name="tipo">f</field>
+      <field name="comentarios">Evaluación completada, revisar notas generales</field>
       <field name="asignatura_ids" eval="[(6, 0, [ref('asignatura3')])]"/>
     </record>
 

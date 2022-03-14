@@ -95,8 +95,8 @@
                     <field name="sequence" widget="handle"/>
                     <field name="fecha"/>
                     <field name="profesor_id"/>
-                    <field name="tipo"/>
                     <field name="asignatura_ids"/>
+                    <field name="tipo" widget="badge" decoration-info="tipo == 'e'" decoration-success="tipo == 'f'"/>
                     <field name="comentarios"/>
                 </tree>
             </field>
@@ -108,7 +108,12 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <separator string="Informacion de la evaluacion"></separator>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-globe">
+                                <field string="Asignaturas" name="asignaturas_totales" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <separator string="Información de la evaluación"></separator>
                         <group>
                             <group>
                                 <field name="fecha"/>
@@ -122,7 +127,7 @@
                             <field name="asignatura_ids"/>
                         </group>
                         <group>
-                            <field name="comentarios"/>
+                            <field name="comentarios" widget="char_emojis"/>
                         </group>
                     </sheet>
                     <!-- CHATTER -->
@@ -160,11 +165,10 @@
             <field name="arch" type="xml">
                 <calendar mode="month" date_start="fecha" color="tipo">
                     <field name="tipo"/>
-                    <field name="comentarios"/>
+                    <field name="comentarios"/> <!--Como el campo puede ser traducido, se quita la traduccion si metes emoji. widget="char_emojis"-->
                 </calendar>
             </field>
         </record>
-
 
         <!-- Accion de ventana Evaluacion-->
         <record model="ir.actions.act_window" id="academia.evaluacion_action_window">
@@ -206,7 +210,7 @@
                             </button>
                         </div>
                        
-                        <separator string="Informacion del Curso"/>
+                        <separator string="Información del Curso"/>
                         <h1>
                             <field name="name" placeholder="Nombre"/>
                         </h1> 
@@ -267,7 +271,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <separator string="Informacion del Profesor"></separator>
+                        <separator string="Información del Profesor"></separator>
                         <h1>
                             <field name="name" placeholder="DNI"/>
                         </h1> 
@@ -336,7 +340,7 @@
                                 <field string="Asignaturas" name="asignaturas_totales" widget="statinfo"/>
                             </button>
                         </div>
-                        <separator string="Informacion del Alumno"></separator>
+                        <separator string="Información del Alumno"></separator>
                         <h1>
                             <field name="name" placeholder="DNI"/>
                         </h1> 

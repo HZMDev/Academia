@@ -123,7 +123,15 @@ class evaluacion(models.Model):
 
     #Relaciones
     asignatura_ids = fields.Many2many('academia.asignatura', string="Asignaturas")
-    profesor_id = fields.Many2one('academia.profesor', string="Nombre del responsable")
+    profesor_id = fields.Many2one('academia.profesor', string="DNI del profesor responsable")
+
+    asignaturas_totales = fields.Integer(string="Asignaturas Totales", compute="_get_asignaturas_totales")
+
+    @api.depends('asignatura_ids')
+    def _get_asignaturas_totales(self):
+        for evaluacion in self:
+            evaluacion.asignaturas_totales = len(evaluacion.asignatura_ids)
+
 
 class alumno(models.Model):
     _name='academia.alumno'
